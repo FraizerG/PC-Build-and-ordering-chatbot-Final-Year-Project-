@@ -94,7 +94,7 @@ namespace Chat_Bot.Dialogs
 
 
             return new FormBuilder<PCFields>()
-                .Message("Welcome to my PC build selection!")
+                .Message("Please choose your required PC build specification:")
                 .Field(nameof(PCManufactor))
                 .Field(nameof(OperatingSystem))
                 .Field(nameof(RAM))
