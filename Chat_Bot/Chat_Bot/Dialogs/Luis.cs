@@ -20,14 +20,14 @@ namespace Chat_Bot.Dialogs
         [LuisIntent("None")]
         public async Task None(IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Default Intent");
+            await context.PostAsync("Sorry, I did not understood what you said.");
             context.Wait(MessageReceived);
         }
 
         [LuisIntent("Welcome")]
         public async Task Greeting (IDialogContext context, LuisResult result)
         {
-            await context.PostAsync("Hello Welcome to the PC Builder Chatbot assistance");
+            await context.PostAsync("Hello Welcome to the PC Builder Chatbot assistance, feel free to ask any questions about a specific build such as gaming, work etc. Or feel free to start building your required specification");
             context.Wait(MessageReceived);
         }
 
@@ -38,6 +38,22 @@ namespace Chat_Bot.Dialogs
             context.Call(FormDialog.FromForm(Dialogs.PCFields.GetForm), MakeDialogComplete);
             await context.PostAsync("Please press any key and press enter to bring up the PC Builder");
         }
+
+        [LuisIntent("Gaming")]
+        public async Task GamingHelp(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("The suggested build for a gaming build is a processor above I5+, a large RAM and also a top end graphics card such as an RTX3070");
+            context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("Work")]
+        public async Task WorkHelp(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("There are no specific requirements for a work computer, you could have the most cheapest CPU and lowest RAM but depending on the type of work a higher procesing power may be needed e.g coding.");
+            context.Wait(MessageReceived);
+        }
+
+
 
 
         private IDialog<Dialogs.PCFields> MakeDialog(IDialogContext context, IAwaitable<object> result)

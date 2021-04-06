@@ -68,7 +68,11 @@ namespace Chat_Bot.Dialogs
         public StorageType? Storage;
 
 
+        [Describe(description: "your First Name:")]
+        public string firstName;
 
+        [Describe(description: "your second Name:")]
+        public string secondName;
 
         [Describe(description: "your Email Address:")]
         [Pattern(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]
@@ -89,12 +93,17 @@ namespace Chat_Bot.Dialogs
                     EnableSsl = true,
                 };
 
-                smtpClient.Send("rg015981@student.reading.ac.uk", state.email, "PC Build", $"We have your PC Build configuration ready to be built!\n The specification required is as below:\nManufactor: {state.PCManufactor}\n Operating System: {state.OperatingSystem}\n RAM Size: {state.RAM}\n CPU: {state.Core}\n Graphics Card: {state.GPU}\n Storage Size: {state.Storage}\n Total Cost: £{state.costs.Total}");
+                smtpClient.Send("rg015981@student.reading.ac.uk", state.email, "PC Build", $" Dear {state.firstName} {state.secondName},\n We have your PC Build configuration ready to be built!\n The specification required is as below:\n Manufactor: {state.PCManufactor}\n Operating System: {state.OperatingSystem}\n RAM Size: {state.RAM}\n CPU: {state.Core}\n Graphics Card: {state.GPU}\n Storage Size: {state.Storage}\n Total Cost: £{state.costs.Total}\nThanks for using my service!");
             };
 
+            
+
+            
 
             return new FormBuilder<PCFields>()
                 .Message("Please choose your required PC build specification:")
+                .Field(nameof(firstName))
+                .Field(nameof(secondName))
                 .Field(nameof(PCManufactor))
                 .Field(nameof(OperatingSystem))
                 .Field(nameof(RAM))
