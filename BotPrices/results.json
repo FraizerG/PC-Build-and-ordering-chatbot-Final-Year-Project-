@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "title": "RAM4GB",
+    "price": "21.73"
+  },
+  {
+    "id": 2,
+    "title": "RAMGB8",
+    "price": "42.49"
+  },
+  {
+    "id": 3,
+    "title": "RAMGB16",
+    "price": "75.68"
+  },
+  {
+    "id": 4,
+    "title": "RAMGB32",
+    "price": "127.12"
+  },
+
+
+  {
+    "id": 5,
+    "title": "I3",
+    "price": "69.98"
+  },
+  {
+    "id": 6,
+    "title": "I5",
+    "price": "134.99"
+  },
+  {
+    "id": 7,
+    "title": "I7",
+    "price": "284.99"
+  },
+  {
+    "id": 8,
+    "title": "I9",
+    "price": "398.99"
+  },
+  {
+    "id": 9,
+    "title": "AMD5",
+    "price": "189.98"
+  },
+
+  {
+    "id": 10,
+    "title": "AMD9",
+    "price": "389.99"
+  },
+
+  {
+    "id": 11,
+    "title": "AMD5600XT",
+    "price": "320.00"
+  },
+
+  {
+    "id": 12,
+    "title": "GTX1660Super",
+    "price": "205.56"
+  },
+
+  {
+    "id": 13,
+    "title": "RRTX2080TI",
+    "price": "1,149.00"
+  },
+  {
+    "id": 14,
+    "title": "HDD1TB",
+    "price": "32.39"
+  },
+  {
+    "id": 15,
+    "title": "HDD5TB",
+    "price": "171.98"
+  },
+  {
+    "id": 16,
+    "title": "SSD256GB",
+    "price": "34.49"
+  },
+  {
+    "id": 17,
+    "title": "SSD1TB",
+    "price": "87.49"
+  }
+  
+
+
+
+
+
+
+
+
+
+
+]

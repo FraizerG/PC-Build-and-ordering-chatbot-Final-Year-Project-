@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 
 using Microsoft.Bot.Builder.Dialogs;
@@ -9,30 +10,30 @@ using Newtonsoft.Json;
 
 namespace Chat_Bot.Dialogs
 {
-    public enum PCManufactor
+    public enum PCManufactor // Public enums were created to store the values of each components
     {
         Acer, Lenovo, Asus, Microsoft, Samsung
     }
 
-    public enum OperatingSystem
+    public enum OperatingSystem // Public enums were created to store the values of each components
     {
         Windows10, Windows8, Windows7, Linux, UNIX
     }
 
-    public enum RamSize
+    public enum RamSize // Public enums were created to store the values of each components
     {
         GB4, GB8, GB16, GB32
     }
 
-    public enum CPU
+    public enum CPU// Public enums were created to store the values of each components
     {
         I3, I5, I7, I9, AMD5, AMD9
     }
-    public enum GraphicsCard
+    public enum GraphicsCard// Public enums were created to store the values of each components
     {
         GTX1660Super, AMD5600XT, RTX3070, RRTX2080TI
     }
-    public enum StorageType
+    public enum StorageType// Public enums were created to store the values of each components
     {
         HDD1TB, HDD5TB, SSD256GB, SSD1TB
     }
@@ -54,42 +55,53 @@ namespace Chat_Bot.Dialogs
     public class PCFields
     {
         public Costs costs = new Costs();
-        [Describe(description: "Company", title: "PC Brand", subTitle: "These are the brands of PCs we only offer")]
-        public PCManufactor? PCManufactor;
-        [Describe(description: "Operating Systems", subTitle: "This comes free with the PC")]
-        public OperatingSystem? OperatingSystem;
-        [Describe(description: "RAM Size", subTitle: "How big of a RAM size would you like? The bigger more tasks can be perfomed.")]
-        public RamSize? RAM;
-        [Describe(description: "CPU", subTitle: "What CPU would you like?")]
-        public CPU? Core;
-        [Describe(description: "GPU", subTitle: "What graphics card would you like?")]
-        public GraphicsCard? GPU;
-        [Describe(description: "Storage Type", subTitle: "What storage type would you like? SSD is faster but more expensive than HDD")]
-        public StorageType? Storage;
 
 
-        [Describe(description: "your First Name:")]
+        [Describe(description: "Company", title: "PC Brand", subTitle: "These are the brands of PCs we only offer")] // Gives information about each components
+        public PCManufactor? PCManufactor; // Assigns the enum to a variable to build the form in
+        [Describe(description: "Operating Systems", subTitle: "This comes free with the PC")] // Gives information about each components
+        public OperatingSystem? OperatingSystem; // Assigns the enum to a variable to build the form in
+        [Describe(description: "RAM Size", subTitle: "How big of a RAM size would you like? The bigger more tasks can be perfomed.")] // Gives information about each components
+        public RamSize? RAM; // Assigns the enum to a variable to build the form in
+        [Describe(description: "CPU", subTitle: "What CPU would you like?")] // Gives information about each components
+        public CPU? Core; // Assigns the enum to a variable to build the form in
+        [Describe(description: "GPU", subTitle: "What graphics card would you like?")] // Gives information about each components
+        public GraphicsCard? GPU; // Assigns the enum to a variable to build the form in
+        [Describe(description: "Storage Type", subTitle: "What storage type would you like? SSD is faster but more expensive than HDD")] // Gives information about each components
+        public StorageType? Storage; // Assigns the enum to a variable to build the form in
+
+
+        [Describe(description: "your First Name:")] // Input for first name
         public string firstName;
 
-        [Describe(description: "your second Name:")]
+        [Describe(description: "your last Name:")] // input for last name name
         public string secondName;
 
-        [Describe(description: "your Email Address:")]
-        [Pattern(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]
+        [Describe(description: "your Email Address:")]//input for the email address
+        [Pattern(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")] // a pattern regex that only accepts a certain format of email address
         public string email;
         public static IForm<PCFields> GetForm()
         {
-            Price[] prices = JsonConvert.DeserializeObject<Price[]>(File.ReadAllText(@"C:\Users\fraiz\source\repos\Chat_Bot\Chat_Bot\results.json"));
+            Price[] prices = null; // make prices list empty
+            using (var httpClient = new HttpClient()) // create an http client
+            {
+                using (var response = httpClient.GetAsync("https://localhost:44391/api/values")) // retrieve the local host prices values 
+                {
+                    string apiResponse = response.Result.Content.ReadAsStringAsync().Result; //read the json file as a string
+                    prices = JsonConvert.DeserializeObject<Price[]>(apiResponse); // Use a JSON converter and retrieve the file into the prices list
+                }
+            }
+            //Price[] prices = JsonConvert.DeserializeObject<Price[]>(File.ReadAllText(@"C:\Users\fraiz\source\repos\Chat_Bot\Chat_Bot\results.json"));
 
             OnCompletionAsyncDelegate<PCFields> onFormCompletion = async (context, state) =>
             {
 
-                await context.PostAsync($"Final Cost is £{state.costs.Total}");
-                await context.PostAsync("We have your PC Build configuration ready to be built! An email should be sent confirming this.");
-                var smtpClient = new SmtpClient("smtp.office365.com")
+                await context.PostAsync($"Final Cost is £{state.costs.Total}");//final cost defined
+                await context.PostAsync("We have your PC Build configuration ready to be built! An email should be sent confirming this."); //final message
+                var smtpClient = new SmtpClient("smtp.office365.com") //set up smtp client
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential("rg015981@student.reading.ac.uk", "Graizer1"),
+                    Credentials = new NetworkCredential("rg015981@student.reading.ac.uk", "Graizer1"), //credentials to send the email from
                     EnableSsl = true,
                 };
 

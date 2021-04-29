@@ -125,12 +125,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
-    <Compile Include="Dialogs\HelloDialogChain.cs" />
     <Compile Include="Dialogs\Luis.cs" />
     <Compile Include="Dialogs\PCFields.cs" />
-    <Compile Include="Dialogs\PromptDemo.cs" />
-    <Compile Include="Dialogs\RootDialog.cs" />
-    <Compile Include="Dialogs\WelcomeDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
